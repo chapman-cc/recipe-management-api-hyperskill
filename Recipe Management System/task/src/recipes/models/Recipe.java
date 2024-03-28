@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -11,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,11 +36,16 @@ public class Recipe {
     @ElementCollection
     @Size(min = 1)
     private List<String> directions = new ArrayList<>();
+    @NotBlank
+    private String category;
+    @UpdateTimestamp
+    private LocalDateTime date;
 
-    public Recipe(String name, String description, List<String> ingredients, List<String> directions) {
+    public Recipe(String name, String description, List<String> ingredients, List<String> directions, String category) {
         this.name = name;
         this.description = description;
         this.ingredients = ingredients;
         this.directions = directions;
+        this.category = category;
     }
 }
