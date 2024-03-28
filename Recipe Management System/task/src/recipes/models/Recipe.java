@@ -5,10 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.util.LinkedList;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -19,12 +23,19 @@ public class Recipe {
     @GeneratedValue
     @JsonIgnore
     private Long id;
-    private String name;
-    private String description;
-    private LinkedList<String> ingredients;
-    private LinkedList<String> directions;
 
-    public Recipe(String name, String description, LinkedList<String> ingredients, LinkedList<String> directions) {
+    @NotBlank
+    private String name;
+    @NotBlank
+    private String description;
+    @ElementCollection
+    @Size(min = 1)
+    private List<String> ingredients = new ArrayList<>();
+    @ElementCollection
+    @Size(min = 1)
+    private List<String> directions = new ArrayList<>();
+
+    public Recipe(String name, String description, List<String> ingredients, List<String> directions) {
         this.name = name;
         this.description = description;
         this.ingredients = ingredients;

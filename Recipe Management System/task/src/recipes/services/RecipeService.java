@@ -2,9 +2,12 @@ package recipes.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import recipes.exceptions.RecipeNotFoundException;
 import recipes.models.Recipe;
 import recipes.repositories.RecipeRepository;
+
+import javax.validation.Valid;
 
 @Service
 public class RecipeService {
@@ -16,7 +19,7 @@ public class RecipeService {
         return repo.findById(id).orElseThrow(RecipeNotFoundException::new);
     }
 
-    public long save(Recipe recipe) {
+    public long save(@Valid @RequestBody Recipe recipe) {
         Recipe saved = repo.save(recipe);
         return saved.getId();
     }

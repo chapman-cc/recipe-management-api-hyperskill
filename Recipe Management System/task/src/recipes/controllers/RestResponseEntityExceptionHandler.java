@@ -14,6 +14,6 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ExceptionHandler(RecipeNotFoundException.class)
     @ResponseStatus(code = HttpStatus.NOT_FOUND)
     public ResponseEntity<Void> handleRecipeNotFoundException() {
-        return ResponseEntity.status(404).build();
+        return ResponseEntity.notFound().build();
     }
 }
