@@ -27,4 +27,10 @@ public class RecipeController {
         long id = service.save(recipe);
         return Map.of("id", id);
     }
+
+    @DeleteMapping(path = "/{id}")
+    @ResponseStatus(code = HttpStatus.NO_CONTENT)
+    public void deleteRecipe(@PathVariable long id) {
+        service.deleteById(id);
+    }
 }
