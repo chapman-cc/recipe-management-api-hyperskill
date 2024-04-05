@@ -34,12 +34,14 @@ public class RecipeService {
     }
 
     public void deleteById(long id) {
-        repo.findById(id).orElseThrow(RecipeNotFoundException::new);
+        if (!repo.existsById(id)) {
+            throw new RecipeNotFoundException();
+        }
         repo.deleteById(id);
     }
 
     public void update(long id, Recipe recipe) {
-        Recipe oldRecipe = repo.findById(id).orElseThrow(RecipeNotFoundException::new);
+        Recipe oldRecipe = findById(id);
         oldRecipe.setName(recipe.getName());
         oldRecipe.setDescription(recipe.getDescription());
         oldRecipe.setIngredients(recipe.getIngredients());
