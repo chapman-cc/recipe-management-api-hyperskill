@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Entity
 @NoArgsConstructor
@@ -18,9 +19,10 @@ public class RecipeUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Email
+    @Email(message = "Email is not valid")
     private String email;
 
     @NotBlank
+    @Size(min = 8, message = "Password must be at least 8 characters long")
     private String password;
 }
