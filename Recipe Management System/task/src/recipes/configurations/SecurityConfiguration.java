@@ -24,8 +24,12 @@ public class SecurityConfiguration {
         return http.csrf(csrf -> csrf.disable())
                 .httpBasic(Customizer.withDefaults())
 
+                .headers().frameOptions().disable()
+                .and()
+
                 .authorizeRequests()
                 .antMatchers("/api/register").permitAll()
+                .antMatchers("/h2-console/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/actuator/shutdown").permitAll()
                 .anyRequest().authenticated()
                 .and()

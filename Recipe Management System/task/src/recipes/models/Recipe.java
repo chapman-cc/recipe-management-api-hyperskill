@@ -10,6 +10,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -40,12 +41,16 @@ public class Recipe {
     private String category;
     @UpdateTimestamp
     private LocalDateTime date;
+    @Email
+    @JsonIgnore
+    private String author;
 
-    public Recipe(String name, String description, List<String> ingredients, List<String> directions, String category) {
+    public Recipe(String name, String description, List<String> ingredients, List<String> directions, String category, String author) {
         this.name = name;
         this.description = description;
         this.ingredients = ingredients;
         this.directions = directions;
         this.category = category;
+        this.author = author;
     }
 }
