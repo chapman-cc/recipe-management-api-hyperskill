@@ -1,5 +1,7 @@
 package recipes.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import recipes.models.RecipeUser;
 import recipes.repositories.RecipeUserRepository;
@@ -8,9 +10,12 @@ import recipes.repositories.RecipeUserRepository;
 public class RegisterService {
 
     private final RecipeUserRepository repository;
+    private final PasswordEncoder passwordEncoder;
 
-    public RegisterService(RecipeUserRepository repository) {
+    @Autowired
+    public RegisterService(RecipeUserRepository repository, PasswordEncoder passwordEncoder) {
         this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public boolean existsByEmail(String email) {
@@ -18,10 +23,10 @@ public class RegisterService {
     }
 
     public void register(String email, String password) {
+        String encodedPassword = passwordEncoder.encode(password);
         RecipeUser user = new RecipeUser();
         user.setEmail(email);
-        // TODO: add password encoder
-        user.setPassword(password);
+        user.setPassword(encodedPassword);
         repository.save(user);
     }
 }
